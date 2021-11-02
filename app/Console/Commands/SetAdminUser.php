@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\User;
-use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SetAdminUser extends Command
@@ -26,16 +25,6 @@ class SetAdminUser extends Command
     protected $description = 'Make user an admin (by given user ID)';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int
@@ -52,7 +41,7 @@ class SetAdminUser extends Command
         } catch (ModelNotFoundException $e) {
             $this->error("Can't find specified user ID");
             return Command::FAILURE;
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             $this->error('Something went wrong!');
             return Command::FAILURE;
         }
