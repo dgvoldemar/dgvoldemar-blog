@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostController;
@@ -12,6 +13,8 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
+
+Route::post('comments/delete', [CommentController::class, 'delete'])->middleware('auth');
 
 Route::post('newsletter', NewsletterController::class);
 
