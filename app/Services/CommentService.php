@@ -3,22 +3,19 @@
 namespace App\Services;
 
 use App\Models\Comment;
-use Illuminate\Http\Request;
+use App\Services\ServiceExceptions\CommentCantDeleteException;
 use Illuminate\Support\Facades\Auth;
-use LogicException;
 
 class CommentService
 {
-    public function __construct(private Request $request)
-    {}
 
     public function delete(int $id)
     {
         $comment = Comment::findOrFail($id);
-        $user = $this->request->user();
+        $user = Auth::user();
         if (!$comment->canDelete($user))
         {
-            throw new LogicException('Can not delete comment');
+            throw new CommentCantDeleteException('Only admin and owner (within one hour) can delete comment.');
         }
         $comment->delete();
 

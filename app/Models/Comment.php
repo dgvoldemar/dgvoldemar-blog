@@ -26,7 +26,6 @@ class Comment extends Model
         if ($this->user_id === $user->id)
         {
             $createTime = Carbon::parse($this->created_at);
-            //$diff = Carbon::now()->diffInHours($createTime);
             $diff = Carbon::now()->diffInMinutes($createTime);
             if ($diff < 1) return true;
         }
