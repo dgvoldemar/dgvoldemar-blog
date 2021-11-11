@@ -55,6 +55,12 @@
                                 New Post
                             </x-dropdown-item>
                         @endadmin
+                        <x-dropdown-item
+                            href="/profile"
+                            :active="request()->is('profile')"
+                        >
+                            Profile
+                        </x-dropdown-item>
 
                         <x-dropdown-item
                             href="#"

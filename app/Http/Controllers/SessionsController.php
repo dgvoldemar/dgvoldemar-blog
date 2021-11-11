@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ProfileService;
 use Illuminate\Validation\ValidationException;
 
 class SessionsController extends Controller
@@ -11,12 +12,14 @@ class SessionsController extends Controller
         return view('sessions.create');
     }
 
-    public function store()
+    public function store(ProfileService $profileService)
     {
         $attributes = request()->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
+
+        $profileService->tryRestoreProfile($attributes);
 
         if (! auth()->attempt($attributes)) {
             throw ValidationException::withMessages([

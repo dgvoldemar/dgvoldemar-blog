@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,9 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
 
 Route::post('comments/delete', [CommentController::class, 'delete'])->middleware('auth');
+
+Route::view('profile', 'profile.profile')->middleware('auth');
+Route::post('profile/delete', [ProfileController::class, 'delete'])->middleware('auth');
 
 Route::post('newsletter', NewsletterController::class);
 
