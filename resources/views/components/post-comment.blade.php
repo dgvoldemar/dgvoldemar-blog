@@ -8,7 +8,18 @@
 
         <div>
             <header class="mb-4">
-                <h3 class="font-bold">{{ $comment->author->username }}</h3>
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold">{{ $comment->author->username }}</h3>
+
+                    @if (Auth::check() AND $comment->canDelete(Auth::user()))
+                        <form method="post" action="/comments/delete" enctype="multipart/form-data">
+                            @csrf
+                            <input name="id" type="hidden" value="{{ $comment->id }}">
+                            <button type="submit">&#10006;</button>
+                        </form>
+                    @endif
+                </div>
+
 
                 <p class="text-xs">
                     Posted
