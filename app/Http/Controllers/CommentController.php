@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\CommentService;
 use App\Services\ServiceExceptions\CommentCantDeleteException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -18,8 +19,10 @@ class CommentController extends Controller
             'id' => 'required|integer'
         ]);
 
+        $user = Auth::user();
+
         try {
-            $this->commentService->delete($request->input('id'));
+            $this->commentService->delete($request->input('id'), $user);
         } catch (CommentCantDeleteException $e) {
             return back()->withErrors(['errors' => $e->getMessage()]);
         } catch (\Throwable $e) {
