@@ -15,10 +15,12 @@ class MakeUsersPostSoftDeletes extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->softDeletes();
+            $table->index('deleted_at');
         });
 
         Schema::table('comments', function (Blueprint $table) {
             $table->softDeletes();
+            $table->index('deleted_at');
         });
     }
 
@@ -30,10 +32,12 @@ class MakeUsersPostSoftDeletes extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropIndex('deleted_at');
             $table->dropSoftDeletes();
         });
 
         Schema::table('comments', function (Blueprint $table) {
+            $table->dropIndex('deleted_at');
             $table->dropSoftDeletes();
         });
     }

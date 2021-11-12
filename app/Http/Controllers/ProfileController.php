@@ -16,19 +16,10 @@ class ProfileController extends Controller
 
     public function delete(Request $request)
     {
-        request()->validate([
-            'id' => 'required|integer'
-        ]);
-
-        $userID = $request->input('id');
         $currentUser = Auth::user();
 
         try {
-            $this->profileService->delete($userID, $currentUser);
-        } catch (WrongUserException $e) {
-            return back()->withErrors(['errors' => $e->getMessage()]);
-        } catch (ModelNotFoundException $e) {
-            return back()->withErrors(['errors' => 'Can not find user.']);
+            $this->profileService->delete($currentUser);
         } catch (\Throwable $e) {
             return back()->withErrors(['errors' => 'Something goes wrong.']);
         }

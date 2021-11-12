@@ -19,7 +19,7 @@ class SessionsController extends Controller
             'password' => 'required'
         ]);
 
-        $profileService->tryRestoreProfile($attributes);
+        $profileService->tryRestoreProfile($attributes['email'], $attributes['password']);
 
         if (! auth()->attempt($attributes)) {
             throw ValidationException::withMessages([

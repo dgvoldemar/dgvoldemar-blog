@@ -2,39 +2,32 @@
 
 namespace App\Services;
 
-use App\Models\Comment;
 use App\Models\User;
-use App\Services\ServiceExceptions\WrongUserException;
 use \Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileService
 {
-    public function delete(int $userId, Authenticatable $currentUser)
+    /**
+     * @param Authenticatable $user
+     */
+    public function delete(Authenticatable $user)
     {
-        if ($currentUser->id !== $userId) {
-            throw new WrongUserException('Only owner can delete his Profile');
-        }
-
-        $user = User::findOrFail($userId);
-
-        $comments = Comment::where('user_id', $user->id)->get();
+        /** @var User $user */
+        $comments = $user->comments;
         foreach ($comments as $comment) {
             $comment->delete();
         }
-
         $user->delete();
-
     }
 
-    public function tryRestoreProfile(array $attributes)
+    public function tryRestoreProfile($email, $password)
     {
-        $user = User::onlyTrashed()->where('email', $attributes['email'])->first();
-        if ($user and Hash::check($attributes['password'], $user?->password)) {
+        $user = User::onlyTrashed()->where('email', $email)->first();
+        if ($user && Hash::check($password, $user?->password)) {
             $user->restore();
-            $comments = Comment::onlyTrashed()->where('user_id', $user->id)->get();
+            $comments = $user->comments()->onlyTrashed()->get();
             foreach ($comments as $comment) {
                 $comment->restore();
             }
@@ -47,7 +40,7 @@ class ProfileService
         $users = User::onlyTrashed()->whereDate('deleted_at', '<', $date)->get();
         foreach ($users as $user)
         {
-            $comments = Comment::onlyTrashed()->where('user_id', $user->id)->get();
+            $comments = $user->comments()->onlyTrashed()->get();
             foreach ($comments as $comment)
             {
                 $comment->forceDelete();
