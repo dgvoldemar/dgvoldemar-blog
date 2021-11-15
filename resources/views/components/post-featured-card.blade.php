@@ -24,6 +24,10 @@
                     <span class="mt-2 block text-gray-400 text-xs">
                         Published <time>{{ $post->created_at->diffForHumans() }}</time>
                     </span>
+
+                    <span class="mt-2 block text-gray-400 text-xs">
+                        Views - today: {{ $post->views()->whereDate('created_at', \Carbon\Carbon::today())->count() }} / total: {{  count($post->views)}}
+                    </span>
                 </div>
             </header>
 

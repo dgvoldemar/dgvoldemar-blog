@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ViewPost;
 use App\Models\Post;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -18,6 +19,9 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        $user = Auth::user();
+        ViewPost::dispatch($post, $user);
+
         return view('posts.show', [
             'post' => $post
         ]);

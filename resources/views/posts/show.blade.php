@@ -18,6 +18,10 @@
                     <time>{{ $post->created_at->diffForHumans() }}</time>
                 </p>
 
+                <p class="mt-4 block text-gray-400 text-xs">
+                    Views - today: {{ $post->views()->whereDate('created_at', \Carbon\Carbon::today())->count() }} / total: {{  count($post->views)}}
+                </p>
+
                 <div class="flex items-center lg:justify-center text-sm mt-4">
                     <img src="/images/lary-avatar.svg" alt="Lary avatar">
                     <div class="ml-3 text-left">
