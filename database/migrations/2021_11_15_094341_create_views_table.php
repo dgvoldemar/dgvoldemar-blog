@@ -16,8 +16,8 @@ class CreateViewsTable extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->foreignId('post_id')->index()->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->ipAddress('visitor');
+            $table->foreignId('user_id')->index()->nullable()->constrained();
+            $table->ipAddress('visitor')->index();
             $table->timestamps();
             $table->softDeletes();
         });

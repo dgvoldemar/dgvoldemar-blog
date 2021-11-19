@@ -21,7 +21,7 @@ class ViewPost
      *
      * @return void
      */
-    public function __construct(public Post $post, public ?Authenticatable $user)
+    public function __construct(public Post $post, public string $visitor, public ?Authenticatable $user)
     {
 
     }

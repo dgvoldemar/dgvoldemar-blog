@@ -4,21 +4,18 @@ namespace App\Services;
 
 use App\Models\Post;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\Request;
 
 class ViewService
 {
-    public function view(Post $post, ?Authenticatable $user)
+    public function view(Post $post, string $visitor, ?Authenticatable $user)
     {
-        $visitor = Request::ip();
-
         if ($user) {
-            $view = $post->views()->where('user_id', '=', $user->id)->first();
+            $view = $post->views()->where('user_id', '=', $user->id)->exists();
         } else {
-            $view = $post->views()->where('visitor', '=', $visitor)->first();
+            $view = $post->views()->where('visitor', '=', $visitor)->exists();
         }
 
-        if (!$view){
+        if (!$view) {
             $post->views()->create([
                 'user_id' => $user->id ?? NULL,
                 'visitor' => $visitor

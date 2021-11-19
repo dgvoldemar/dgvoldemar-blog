@@ -19,7 +19,7 @@
                 </p>
 
                 <p class="mt-4 block text-gray-400 text-xs">
-                    Views - today: {{ $post->views()->whereDate('created_at', \Carbon\Carbon::today())->count() }} / total: {{  count($post->views)}}
+                    Views - today: {{ \App\Services\PostService::getTodayViews($post) }} / total: {{ \App\Services\PostService::getTotalViews($post) }}
                 </p>
 
                 <div class="flex items-center lg:justify-center text-sm mt-4">

@@ -18,11 +18,11 @@ class CreatePostView implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  ViewPost  $event
+     * @param ViewPost $event
      * @return void
      */
     public function handle(ViewPost $event)
     {
-        $this->viewService->view($event->post, $event->user);
+        $this->viewService->view($event->post, $event->visitor, $event->user);
     }
 }

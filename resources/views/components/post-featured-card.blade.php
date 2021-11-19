@@ -26,7 +26,7 @@
                     </span>
 
                     <span class="mt-2 block text-gray-400 text-xs">
-                        Views - today: {{ $post->views()->whereDate('created_at', \Carbon\Carbon::today())->count() }} / total: {{  count($post->views)}}
+                        Views - today: {{ \App\Services\PostService::getTodayViews($post) }} / total: {{ \App\Services\PostService::getTotalViews($post) }}
                     </span>
                 </div>
             </header>
