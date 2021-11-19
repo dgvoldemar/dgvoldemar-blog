@@ -47,4 +47,19 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function views()
+    {
+        return $this->hasMany(View::class);
+    }
+
+    public function getTotalViews() : int
+    {
+        return count($this->views);
+    }
+
+    public function getTodayViews() : int
+    {
+        return $this->views()->whereDate('created_at', \Carbon\Carbon::today())->count();
+    }
 }
