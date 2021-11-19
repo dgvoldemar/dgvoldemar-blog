@@ -19,7 +19,7 @@
                 </p>
 
                 <p class="mt-4 block text-gray-400 text-xs">
-                    Views - today: {{ \App\Services\PostService::getTodayViews($post) }} / total: {{ \App\Services\PostService::getTotalViews($post) }}
+                    Views - today: {{ $post->getTodayViews() }} / total: {{ $post->getTotalViews() }}
                 </p>
 
                 <div class="flex items-center lg:justify-center text-sm mt-4">

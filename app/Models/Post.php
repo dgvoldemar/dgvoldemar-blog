@@ -52,4 +52,14 @@ class Post extends Model
     {
         return $this->hasMany(View::class);
     }
+
+    public function getTotalViews() : int
+    {
+        return count($this->views);
+    }
+
+    public function getTodayViews() : int
+    {
+        return $this->views()->whereDate('created_at', \Carbon\Carbon::today())->count();
+    }
 }

@@ -25,7 +25,7 @@
                     </span>
 
                     <span class="mt-2 block text-gray-400 text-xs">
-                        Views - today: {{ \App\Services\PostService::getTodayViews($post) }} / total: {{ \App\Services\PostService::getTotalViews($post) }}
+                        Views - today: {{ $post->getTodayViews() }} / total: {{ $post->getTotalViews() }}
                     </span>
                 </div>
             </header>
